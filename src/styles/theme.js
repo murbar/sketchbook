@@ -15,6 +15,14 @@ const theme = {
   },
   inputBorderRadius: `0.5rem`,
   fontFamily: "'Nunito', sans-serif",
+  map: {
+    roomColor: 'orange',
+    labelColor: 'black',
+    currentRoomColor: 'red',
+    currentRoomLabelColor: 'white',
+    focusRoomColor: 'teal',
+    unknownConnectionColor: '#ccc'
+  },
   media
 };
 

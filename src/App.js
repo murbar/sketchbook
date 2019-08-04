@@ -1,6 +1,11 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from 'components/Header';
+import Menu from 'components/Menu';
+import About from 'components/About';
+import Maze from 'components/maze/Maze';
+import Games from 'components/games/Games';
 
 const Styles = styled.div`
   margin: 0 2rem;
@@ -9,16 +14,15 @@ const Styles = styled.div`
 function App() {
   return (
     <Styles>
-      <Header />
-      <p>
-        July 2019 - is it{' '}
-        <a href="https://github.com/facebook/create-react-app/releases">up to date</a>?
-      </p>
-      <ul>
-        <li>No cruft</li>
-        <li>Styled components - global styles, theme, helpers</li>
-        <li>"Nunito" font face</li>
-      </ul>
+      <Router>
+        <Header />
+        <Menu />
+        <Switch>
+          <Route exact path="/" component={About} />
+          <Route path="/maze" component={Maze} />
+          <Route path="/games" component={Games} />
+        </Switch>
+      </Router>
     </Styles>
   );
 }
