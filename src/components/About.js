@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 import config from 'config';
+import Header from 'components/Header';
 import ReactGA from 'react-ga';
 
 export default function About() {
@@ -13,6 +14,8 @@ export default function About() {
 
   return (
     <div>
+      <Header />
+
       <h2>About</h2>
       <p>
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus, veritatis dicta

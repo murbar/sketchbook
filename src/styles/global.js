@@ -14,7 +14,7 @@ export default createGlobalStyle`
     font-family: ${p => p.theme.fontFamily};
     font-size: 1.8rem;
     line-height: 1.7;
-    min-height: 100vh;
+    min-height: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
