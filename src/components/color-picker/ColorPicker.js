@@ -167,8 +167,9 @@ export default function ColorPicker() {
       <p>
         The Hue element is implemented as a <code>div</code> and a linear gradient with 25 stops at
         hues around the color wheel - 24 increments of 15 degrees with another to take us back
-        around to the beginning. A slider will be used to allow the user to select a value between 0
-        and 360.
+        around to the beginning. That many stops isn't strictly necessary, but it makes for a very
+        accurate spectrum display. A slider will be used to allow the user to select a value between
+        0 and 360.
       </p>
       <p>
         The saturation and value selector is more tricky. We have to layer three gradients to get
@@ -188,8 +189,9 @@ export default function ColorPicker() {
         To build a HSL picker we need to depict the hue and saturation as a radial gradient on a
         circle, with the hues 100% saturated and at 50% luminance around the perimeter and
         approaching full desaturation towards the center of the circle. This is accomplished with
-        eight partially transparent radial gradients positioned around the circle. The user then
-        selects the luminance value from a slider.
+        eight partially transparent radial gradients positioned around the circle. The degree of the
+        selection around the circle would give up the Hue and the distance from the center would be
+        the Saturation level. The user then selects the Luminance value from a slider.
       </p>
       <HSLPicker>
         <HueSatSelect />

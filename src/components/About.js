@@ -15,13 +15,19 @@ export default function About() {
   return (
     <div>
       <Header />
-
       <h2>About</h2>
       <p>
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus, veritatis dicta
         non ea totam ullam aliquid eum ipsam vel recusandae asperiores, veniam culpa voluptatem
         perspiciatis repellat fugiat accusamus ut numquam!{' '}
       </p>
+      <h2>Things to add</h2>
+      <ul>
+        <li>File import/export</li>
+        <li>Self-destructing message queue</li>
+        <li>Hooks demo page</li>
+        <li>Make this list interactive and persistent</li>
+      </ul>
     </div>
   );
 }
