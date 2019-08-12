@@ -33,16 +33,19 @@ export default function Menu() {
             <Link to="/games">Games</Link>
           </li>
           <li>
-            <Link to="/color-picker">Color Picker</Link>
+            <Link to="/color-picker">Color picker</Link>
           </li>
           <li>
             <Link to="/import-export">Data import/export</Link>
           </li>
           <li>
-            <Link to="/ui">UI Library</Link>
+            <Link to="/ui">UI library</Link>
           </li>
           <li>
             <Link to="/message-queue">Message queue</Link>
+          </li>
+          <li>
+            <Link to="/string-tweening">String tweening</Link>
           </li>
         </ul>
       </nav>
