@@ -10,7 +10,7 @@ import UILibrary from 'components/ui/UILibrary';
 import ColorPicker from 'components/color-picker/ColorPicker';
 import DataImportExport from 'components/import-export/DataImportExport';
 import MessageQueue from 'components/message-queue/MessageQueue';
-import StringTweening from 'components/string-tweening/StringTweening';
+import { default as TweeningDemo } from 'components/string-tweening/Demo';
 
 const Layout = styled.div`
   display: flex;
@@ -35,7 +35,7 @@ function App() {
             <Route path="/import-export" component={DataImportExport} />
             <Route path="/ui" component={UILibrary} />
             <Route path="/message-queue" component={MessageQueue} />
-            <Route path="/string-tweening" component={StringTweening} />
+            <Route path="/string-tweening" component={TweeningDemo} />
             <Route component={NotFound} />
           </Switch>
         </main>
