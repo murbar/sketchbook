@@ -37,14 +37,14 @@ const convertToString = charCodeArray => {
 export default function StringTween({ children, duration = null }) {
   const from = convertToCharCodeArray(scrambleString(children));
   const to = convertToCharCodeArray(children);
-  const config = {
+  const tween = {
     from: {
       chars: from
     },
     chars: to
   };
-  if (duration) config.config.duration = duration;
-  const spring = useSpring(config);
+  if (duration) tween.config = { duration };
+  const spring = useSpring(tween);
 
   return (
     <animated.span>
