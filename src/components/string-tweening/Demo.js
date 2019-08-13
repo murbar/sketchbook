@@ -65,6 +65,8 @@ export default function Demo() {
         unique, the element (and it's useSpring hook) will be reused and will only ever render as
         many characters as the smallest string it is given.
       </p>
+
+      <p>Note this technique won't work so well with really long string. </p>
       <h3>
         Demo: <em>The Road Not Taken</em> by Robert Frost
       </h3>
