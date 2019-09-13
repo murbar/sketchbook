@@ -13,6 +13,7 @@ const DataImportExport = lazy(() => import('components/import-export/DataImportE
 const MessageQueue = lazy(() => import('components/message-queue/MessageQueue'));
 const ChainVsReduce = lazy(() => import('components/perf/ChainVsReduce'));
 const TweeningDemo = lazy(() => import('components/string-tweening/Demo'));
+const Calendar = lazy(() => import('components/calendar/CalendarPage'));
 
 const Layout = styled.div`
   display: flex;
@@ -40,6 +41,7 @@ function App() {
               <Route path="/message-queue" component={MessageQueue} />
               <Route path="/string-tweening" component={TweeningDemo} />
               <Route path="/chaining-perf" component={ChainVsReduce} />
+              <Route path="/calendar" component={Calendar} />
               <Route component={NotFound} />
             </Switch>
           </Suspense>

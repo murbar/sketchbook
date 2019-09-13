@@ -47,6 +47,12 @@ export default function Menu() {
           <li>
             <Link to="/string-tweening">String tweening</Link>
           </li>
+          <li>
+            <Link to="/chaining-perf">Chaining Vs reduce</Link>
+          </li>
+          <li>
+            <Link to="/calendar">Calendar</Link>
+          </li>
         </ul>
       </nav>
     </Styles>
