@@ -107,10 +107,15 @@ export default function Page() {
     });
   };
 
+  const focusCurrentMonth = () => {
+    setFocus(prev => ({ ...prev, year: now.getFullYear(), month: now.getMonth() }));
+  };
+
   return (
     <Styled>
       <h1>Calendar</h1>
       <button onClick={focusPrevMonth}>{'<<'}</button>
+      <button onClick={focusCurrentMonth}>Today</button>
       <button onClick={focusNextMonth}>{'>>'}</button>
       <Calendar {...focus} />
     </Styled>
