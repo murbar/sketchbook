@@ -31,9 +31,18 @@ const LabelDayOfWeek = styled.div`
 const Day = styled.div`
   grid-column: ${p => p.col};
   grid-row: ${p => p.row};
+  color: ${p => (p.isToday ? 'red' : 'inherit')};
 `;
 
 const now = new Date();
+
+const isToday = date => {
+  return (
+    date.getFullYear() === now.getFullYear() &&
+    date.getMonth() === now.getMonth() &&
+    date.getDate() === now.getDate()
+  );
+};
 
 const Calendar = ({ month = now.getMonth(), year = now.getFullYear() }) => {
   const dayLabels = getDaysOfWeek('short');
@@ -61,7 +70,12 @@ const Calendar = ({ month = now.getMonth(), year = now.getFullYear() }) => {
 
       {daysInMonth.map((d, i) => {
         return (
-          <Day key={i} row={d.weekOfMonth + 2} col={d.dayOfWeek}>
+          <Day
+            key={i}
+            row={d.weekOfMonth + 2}
+            col={d.dayOfWeek}
+            isToday={isToday(d.date)}
+          >
             {d.dayOfMonth}
           </Day>
         );
