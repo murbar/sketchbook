@@ -6,23 +6,25 @@ const Styled = styled.div``;
 
 const CalendarContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: 5rem 3rem repeat(${p => p.weeksInMonth}, 8rem);
-  border-radius: 1rem;
+  grid-template-columns: [start] repeat(7, 1fr) [end];
+  grid-template-rows: [top] 5rem 3rem repeat(${p => p.weeksInMonth}, 8rem) [bottom];
+  border-radius: 0.5rem;
   background: #ccc;
   grid-gap: 2px;
   overflow: hidden;
+  border: 2px solid #ccc;
 `;
 
 const LabelMonth = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2em;
+  font-size: 1.6em;
+  font-weight: bold;
   align-self: stretch;
   height: 100%;
-  grid-column: 1 / 8;
-  grid-row: 1;
+  grid-column: start / end;
+  grid-row: top;
 `;
 
 const LabelDayOfWeek = styled.div`
@@ -35,13 +37,14 @@ const Day = styled.div`
   grid-column: ${p => p.col} / ${p => p.col};
   grid-row: ${p => p.row};
   position: relative;
-  background: #fff;
+  background: ${p => (p.isToday ? 'lightyellow' : 'white')};
   border-radius: 0.25rem;
 `;
 
 const DayNumber = styled.div`
-  color: ${p => (p.isToday ? 'red' : 'inherit')};
-  font-weight: ${p => (p.isToday ? 'bold' : 'inherit')};
+  font-size: 0.8em;
+  font-weight: bold;
+  line-height: 1;
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
@@ -81,8 +84,13 @@ const Calendar = ({ month, year }) => {
 
       {daysInMonth.map((d, i) => {
         return (
-          <Day key={i} row={d.weekOfMonth + 2} col={d.dayOfWeek}>
-            <DayNumber isToday={isToday(d.date)}>{d.dayOfMonth}</DayNumber>
+          <Day
+            key={i}
+            row={d.weekOfMonth + 2}
+            col={d.dayOfWeek}
+            isToday={isToday(d.date)}
+          >
+            <DayNumber>{d.dayOfMonth}</DayNumber>
           </Day>
         );
       })}
