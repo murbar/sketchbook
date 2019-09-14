@@ -120,9 +120,22 @@ export default function Page() {
   return (
     <Styled>
       <h1>Calendar</h1>
+      <p>
+        A calendar widget built <code>Date</code> can CSS grid. No libraries.
+      </p>
+      <h2>Possible enhancements</h2>
+      <ul>
+        <li>Add items to days</li>
+        <li>Label item with color</li>
+        <li>Filter items view by color</li>
+        <li>Jump to any date</li>
+        <li>Year, week, and day views</li>
+        <li>Transition animations</li>
+      </ul>
       <button onClick={focusPrevMonth}>{'<<'}</button>
-      <button onClick={focusCurrentMonth}>Today</button>
+      <button onClick={focusCurrentMonth}>•</button>
       <button onClick={focusNextMonth}>{'>>'}</button>
+
       <Calendar {...focus} />
     </Styled>
   );
