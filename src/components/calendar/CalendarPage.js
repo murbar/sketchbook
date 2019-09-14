@@ -7,31 +7,44 @@ const Styled = styled.div``;
 const CalendarContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: 5rem 3rem repeat(${p => p.weeksInMonth}, 7rem);
+  grid-template-rows: 5rem 3rem repeat(${p => p.weeksInMonth}, 8rem);
+  border-radius: 1rem;
+  background: #ccc;
+  grid-gap: 2px;
+  overflow: hidden;
 `;
 
 const LabelMonth = styled.div`
-  background: #444;
-  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 2em;
-  line-height: 1;
   align-self: stretch;
   height: 100%;
-  grid-column: 1 / end;
+  grid-column: 1 / 8;
   grid-row: 1;
 `;
 
 const LabelDayOfWeek = styled.div`
-  background: #666;
-  color: white;
   grid-column: ${p => p.col};
   grid-row: 2;
+  padding: 0 0.5rem;
 `;
 
 const Day = styled.div`
-  grid-column: ${p => p.col};
+  grid-column: ${p => p.col} / ${p => p.col};
   grid-row: ${p => p.row};
+  position: relative;
+  background: #fff;
+  border-radius: 0.25rem;
+`;
+
+const DayNumber = styled.div`
   color: ${p => (p.isToday ? 'red' : 'inherit')};
+  font-weight: ${p => (p.isToday ? 'bold' : 'inherit')};
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
 `;
 
 const now = new Date();
@@ -44,18 +57,16 @@ const isToday = date => {
   );
 };
 
-const Calendar = ({ month = now.getMonth(), year = now.getFullYear() }) => {
+const Calendar = ({ month, year }) => {
   const dayLabels = getDaysOfWeek('short');
   const daysInMonth = getDaysInMonth(month, year);
   const firstDayDate = daysInMonth[0].date;
+  const weeksInMonth = daysInMonth[daysInMonth.length - 1].weekOfMonth;
   const monthLabel = getMonthLabel(firstDayDate);
   const yearLabel = getYear(firstDayDate);
-  const props = {
-    weeksInMonth: 5
-  };
 
   return (
-    <CalendarContainer {...props}>
+    <CalendarContainer weeksInMonth={weeksInMonth}>
       <LabelMonth>
         {monthLabel} {yearLabel}
       </LabelMonth>
@@ -70,13 +81,8 @@ const Calendar = ({ month = now.getMonth(), year = now.getFullYear() }) => {
 
       {daysInMonth.map((d, i) => {
         return (
-          <Day
-            key={i}
-            row={d.weekOfMonth + 2}
-            col={d.dayOfWeek}
-            isToday={isToday(d.date)}
-          >
-            {d.dayOfMonth}
+          <Day key={i} row={d.weekOfMonth + 2} col={d.dayOfWeek}>
+            <DayNumber isToday={isToday(d.date)}>{d.dayOfMonth}</DayNumber>
           </Day>
         );
       })}
