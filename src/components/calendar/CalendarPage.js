@@ -94,15 +94,15 @@ export default function Page() {
   const focusPrevMonth = () => {
     setFocus(prev => {
       const year = prev.month === 0 ? prev.year - 1 : prev.year;
-      const month = prev.month === 0 ? 12 : prev.month - 1;
+      const month = prev.month === 0 ? 11 : prev.month - 1;
       return { ...prev, year, month };
     });
   };
 
   const focusNextMonth = () => {
     setFocus(prev => {
-      const year = prev.month === 12 ? prev.year + 1 : prev.year;
-      const month = prev.month === 12 ? 0 : prev.month + 1;
+      const year = prev.month === 11 ? prev.year + 1 : prev.year;
+      const month = prev.month === 11 ? 0 : prev.month + 1;
       return { ...prev, year, month };
     });
   };
