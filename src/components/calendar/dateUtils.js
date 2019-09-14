@@ -42,8 +42,8 @@ export const getWeekOfMonth = (dayOfMonth, firstOfMonthDayOfWeek) => {
 
 export const getDaysInMonth = (month, year) => {
   const now = getNow();
-  if (!month) month = now.month;
-  if (!year) year = now.year;
+  if (month === undefined) month = now.month;
+  if (year === undefined) year = now.year;
 
   const daysCount = countDaysInMonth(month, year);
   const days = [];
