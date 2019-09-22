@@ -86,14 +86,14 @@ const initCanvas = canvas => {
 
 export default function Canvas() {
   const canvasRef = useRef();
-  const [circles, setCircles] = useState([]);
+  const circlesRef = useRef([]);
   // const mouse = useMousePosition();
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
     initCanvas(canvas);
-    setCircles(makeCircles(100, rect));
+    circlesRef.current = makeCircles(100, rect);
   }, []);
 
   useWindowResize(() => {
@@ -104,7 +104,7 @@ export default function Canvas() {
     const ctx = canvasRef.current.getContext('2d');
     const [width, height] = getCanvasRect(ctx);
     ctx.clearRect(0, 0, width, height);
-    circles.forEach(c => c.update(ctx));
+    circlesRef.current.forEach(c => c.update(ctx));
   });
 
   return <Styles ref={canvasRef} />;

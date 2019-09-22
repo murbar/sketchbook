@@ -14,7 +14,8 @@ const theme = {
     primary: colors.green
   },
   inputBorderRadius: `0.5rem`,
-  fontFamily: "'Nunito', sans-serif",
+  fontFamily: "'Source Sans Pro', sans-serif",
+  fontFamilyMono: "'Source Code Pro', sans-serif",
   map: {
     roomColor: '#ccc',
     labelColor: 'black',

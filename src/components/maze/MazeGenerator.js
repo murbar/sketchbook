@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 // import MazeDisplay from 'components/maze/MazeDisplay';
 import Canvas from 'components/maze/Canvas';
@@ -126,27 +126,27 @@ const generateGrid = (nRows, nCols) => {
   return grid;
 };
 
-const generateMaze = grid => {
-  const stack = [];
-  let currentCell = grid[Math.floor(Math.random() * grid.length)];
+// const generateMaze = grid => {
+//   const stack = [];
+//   let currentCell = grid[Math.floor(Math.random() * grid.length)];
 
-  while (true) {
-    currentCell.visited = true;
-    let nextCell = currentCell.getUnvisitedNeighbor();
-    if (nextCell) {
-      nextCell.visited = true;
-      stack.push(currentCell);
-      currentCell.removeWallBetween(nextCell);
-      currentCell = nextCell;
-    } else if (stack.length > 0) {
-      currentCell = stack.pop();
-    } else {
-      break;
-    }
-  }
+//   while (true) {
+//     currentCell.visited = true;
+//     let nextCell = currentCell.getUnvisitedNeighbor();
+//     if (nextCell) {
+//       nextCell.visited = true;
+//       stack.push(currentCell);
+//       currentCell.removeWallBetween(nextCell);
+//       currentCell = nextCell;
+//     } else if (stack.length > 0) {
+//       currentCell = stack.pop();
+//     } else {
+//       break;
+//     }
+//   }
 
-  return grid;
-};
+//   return grid;
+// };
 
 const grid = generateGrid(ROWS, COLS);
 const stack = [];
