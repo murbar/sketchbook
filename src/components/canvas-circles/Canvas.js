@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
+import useMousePosition from 'hooks/useMousePosition';
+import useWindowResize from 'hooks/useWindowResize';
+import useRequestAnimationFrame from 'hooks/useRequestAnimationFrame';
 
 class Circle {
   constructor(x = 0, y = 0, dx = 0, dy = 0, radius = 10) {
@@ -8,6 +11,7 @@ class Circle {
     this.dx = dx;
     this.dy = dy;
     this.radius = radius;
+    this.initialRadius = radius;
     this.bgColor = `hsla(${Math.random() * 360}, 100%, 50%, ${Math.random()})`;
   }
 
@@ -18,8 +22,9 @@ class Circle {
     ctx.fill();
   }
 
-  update(ctx) {
+  update(ctx, mousePosition) {
     const [width, height] = getCanvasRect(ctx);
+
     if (this.x + this.radius > width || this.x - this.radius < 0) {
       this.dx = -this.dx;
     }
@@ -48,17 +53,6 @@ const getCanvasRect = ctx => {
   return [width, height];
 };
 
-const debounce = (fn, time) => {
-  let timeout;
-
-  return function() {
-    const functionCall = () => fn.apply(this, arguments);
-
-    clearTimeout(timeout);
-    timeout = setTimeout(functionCall, time);
-  };
-};
-
 const makeCircles = (qty, rect) => {
   return Array(qty)
     .fill(null)
@@ -83,38 +77,35 @@ const Styles = styled.canvas`
 
 // let circles;
 
+const initCanvas = canvas => {
+  const rect = canvas.getBoundingClientRect();
+  scaleToDevicePixelRatio(canvas);
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+};
+
 export default function Canvas() {
   const canvasRef = useRef();
   const [circles, setCircles] = useState([]);
+  // const mouse = useMousePosition();
 
   useEffect(() => {
-    const init = () => {
-      const canvas = canvasRef.current;
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-      scaleToDevicePixelRatio(canvas);
-      setCircles(makeCircles(200, rect));
-    };
-    init();
-
-    const withDelay = debounce(init, 100);
-    window.addEventListener('resize', withDelay);
-    return () => window.removeEventListener('resize', withDelay);
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    initCanvas(canvas);
+    setCircles(makeCircles(100, rect));
   }, []);
 
-  useEffect(() => {
-    const ctx = canvasRef.current.getContext('2d');
-    const draw = () => {
-      const [width, height] = getCanvasRect(ctx);
-      ctx.clearRect(0, 0, width, height);
-      circles.forEach(c => c.update(ctx));
-      window.requestAnimationFrame(draw);
-    };
+  useWindowResize(() => {
+    initCanvas(canvasRef.current);
+  });
 
-    let animation = window.requestAnimationFrame(draw);
-    return () => window.cancelAnimationFrame(animation);
-  }, [circles]);
+  useRequestAnimationFrame(() => {
+    const ctx = canvasRef.current.getContext('2d');
+    const [width, height] = getCanvasRect(ctx);
+    ctx.clearRect(0, 0, width, height);
+    circles.forEach(c => c.update(ctx));
+  });
 
   return <Styles ref={canvasRef} />;
 }
