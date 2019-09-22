@@ -12,13 +12,15 @@ const ColorPicker = lazy(() => import('components/color-picker/ColorPicker'));
 const DataImportExport = lazy(() => import('components/import-export/DataImportExport'));
 const MessageQueue = lazy(() => import('components/message-queue/MessageQueue'));
 const ChainVsReduce = lazy(() => import('components/perf/ChainVsReduce'));
-const TweeningDemo = lazy(() => import('components/string-tweening/Demo'));
+const Tweening = lazy(() => import('components/string-tweening/Demo'));
 const Calendar = lazy(() => import('components/calendar/CalendarPage'));
+const CanvasCircles = lazy(() => import('components/canvas-circles/CanvasCirclesPage'));
 
 const Layout = styled.div`
   display: flex;
   min-height: 100vh;
   main {
+    position: relative;
     padding: 1rem 3rem 4rem;
     flex: 1;
   }
@@ -39,9 +41,10 @@ function App() {
               <Route path="/import-export" component={DataImportExport} />
               <Route path="/ui" component={UILibrary} />
               <Route path="/message-queue" component={MessageQueue} />
-              <Route path="/string-tweening" component={TweeningDemo} />
+              <Route path="/string-tweening" component={Tweening} />
               <Route path="/chaining-perf" component={ChainVsReduce} />
               <Route path="/calendar" component={Calendar} />
+              <Route path="/canvas-circles" component={CanvasCircles} />
               <Route component={NotFound} />
             </Switch>
           </Suspense>
