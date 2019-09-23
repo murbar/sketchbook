@@ -15,6 +15,7 @@ const ChainVsReduce = lazy(() => import('components/perf/ChainVsReduce'));
 const Tweening = lazy(() => import('components/string-tweening/Demo'));
 const Calendar = lazy(() => import('components/calendar/CalendarPage'));
 const CanvasCircles = lazy(() => import('components/canvas-circles/CanvasCirclesPage'));
+const Sudoku = lazy(() => import('components/sudoku/SudokuPage'));
 
 const Layout = styled.div`
   display: flex;
@@ -45,6 +46,7 @@ function App() {
               <Route path="/chaining-perf" component={ChainVsReduce} />
               <Route path="/calendar" component={Calendar} />
               <Route path="/canvas-circles" component={CanvasCircles} />
+              <Route path="/sudoku" component={Sudoku} />
               <Route component={NotFound} />
             </Switch>
           </Suspense>
