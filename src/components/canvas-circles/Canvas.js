@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import useMousePosition from 'hooks/useMousePosition';
+// import useMousePosition from 'hooks/useMousePosition';
 import useWindowResize from 'hooks/useWindowResize';
 import useRequestAnimationFrame from 'hooks/useRequestAnimationFrame';
 
