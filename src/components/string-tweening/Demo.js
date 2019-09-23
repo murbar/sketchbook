@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import StringTween from './StringTween';
+import useDocumentTitle from 'hooks/useDocumentTitle';
 
 const roadNotTakenLines = [
   'Two roads diverged in a yellow wood,',
@@ -42,6 +43,8 @@ export default function Demo() {
       return (prev + 1) % roadNotTakenLines.length;
     });
   };
+
+  useDocumentTitle('String Tweening');
 
   return (
     <Styles>

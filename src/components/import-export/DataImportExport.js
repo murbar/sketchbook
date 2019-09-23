@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import CodeSnippet from 'components/ui/CodeSnippet';
 import dummyData from './dummyData.json';
+import useDocumentTitle from 'hooks/useDocumentTitle.js';
 
 const Styles = styled.div``;
 
@@ -24,7 +25,9 @@ export default function DataImportExport() {
 
   const handleDataDownload = () => {
     const a = document.createElement('a');
-    a.href = 'data:application/octet-stream,' + encodeURIComponent(stringifyPretty(uploadedData));
+    a.href =
+      'data:application/octet-stream,' +
+      encodeURIComponent(stringifyPretty(uploadedData));
     a.download = 'dataExport.json';
     a.click();
   };
@@ -45,6 +48,8 @@ export default function DataImportExport() {
     };
     reader.readAsText(file);
   };
+
+  useDocumentTitle('Data Import/Export');
 
   return (
     <Styles>

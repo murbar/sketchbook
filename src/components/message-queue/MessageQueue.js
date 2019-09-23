@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import useExpiresArray from 'hooks/useExpiresArray';
 import { useTransition, animated } from 'react-spring';
+import useDocumentTitle from 'hooks/useDocumentTitle';
 
 const Styles = styled.div`
 li`;
@@ -34,6 +35,8 @@ export default function MessageQueue() {
     const { name, value } = e.target;
     setInputs(prev => ({ ...prev, [name]: value }));
   };
+
+  useDocumentTitle('Message Queue');
 
   return (
     <Styles>

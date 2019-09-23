@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import useDocumentTitle from 'hooks/useDocumentTitle';
 
 const sumArray = arr => arr.reduce((a, b) => a + b, 0);
 const avgArray = arr => sumArray(arr) / arr.length;
@@ -62,15 +63,20 @@ export default function ChainVsReduce() {
 
   const run = (func, rounds) => {
     const results = timeFuncRepeat(func, rounds);
-    setMessages(prev => [...prev, `Ran ${func.name} ${rounds}x - avg time ${results.avg}ms`]);
+    setMessages(prev => [
+      ...prev,
+      `Ran ${func.name} ${rounds}x - avg time ${results.avg}ms`
+    ]);
   };
+
+  useDocumentTitle('Exploring JS Performance');
 
   return (
     <Styles>
       <h1>Function chaining Vs reduce</h1>
       <p>
-        We're transforming an array of 1,000,000 items. Reduce is up to 5-7x faster than chaining
-        function calls.
+        We're transforming an array of 1,000,000 items. Reduce is up to 5-7x faster than
+        chaining function calls.
       </p>
       <button onClick={() => run(mapper, 3)}>Run /w chaining</button>
       <button onClick={() => run(reducer, 3)}>Run /w reduce</button>

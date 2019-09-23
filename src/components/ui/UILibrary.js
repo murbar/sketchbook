@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CodeSnippet from './CodeSnippet';
+import useDocumentTitle from 'hooks/useDocumentTitle';
 
 const Styles = styled.div``;
 
@@ -25,6 +26,7 @@ const Props = ({ items }) => {
 };
 
 export default function UILibrary() {
+  useDocumentTitle('MurrayUI Component Library');
   return (
     <Styles>
       <h1>UI Library</h1>

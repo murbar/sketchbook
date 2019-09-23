@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import useDocumentTitle from 'hooks/useDocumentTitle';
 
 const Styles = styled.div``;
 
@@ -153,6 +154,7 @@ const LumSelect = styled.div`
 `;
 
 export default function ColorPicker() {
+  useDocumentTitle('Color Picker');
   return (
     <Styles>
       <h1>Color Picker</h1>
@@ -165,20 +167,21 @@ export default function ColorPicker() {
       </ul>
       <h2>HSV</h2>
       <p>
-        The Hue element is implemented as a <code>div</code> and a linear gradient with 25 stops at
-        hues around the color wheel - 24 increments of 15 degrees with another to take us back
-        around to the beginning. That many stops isn't strictly necessary, but it makes for a very
-        accurate spectrum display. A slider will be used to allow the user to select a value between
-        0 and 360.
+        The Hue element is implemented as a <code>div</code> and a linear gradient with 25
+        stops at hues around the color wheel - 24 increments of 15 degrees with another to
+        take us back around to the beginning. That many stops isn't strictly necessary,
+        but it makes for a very accurate spectrum display. A slider will be used to allow
+        the user to select a value between 0 and 360.
       </p>
       <p>
-        The saturation and value selector is more tricky. We have to layer three gradients to get
-        the desired effect. The base color is the selected Hue at 100% Saturation and 50% Luminance.
-        We layed upon that a linear gradient from the right starting at white and approaching full
-        transparency, and finally another from the bottom, black to transparent. The user's
-        selection will be used to determine the S and V values with the <code>x</code> position of
-        the selection as the Saturation, and the <code>y</code> as the Value. We can then convert
-        this HSV value to HSL as needed.
+        The saturation and value selector is more tricky. We have to layer three gradients
+        to get the desired effect. The base color is the selected Hue at 100% Saturation
+        and 50% Luminance. We layed upon that a linear gradient from the right starting at
+        white and approaching full transparency, and finally another from the bottom,
+        black to transparent. The user's selection will be used to determine the S and V
+        values with the <code>x</code> position of the selection as the Saturation, and
+        the <code>y</code> as the Value. We can then convert this HSV value to HSL as
+        needed.
       </p>
       <HSVPicker>
         <HueSelect />
@@ -186,12 +189,13 @@ export default function ColorPicker() {
       </HSVPicker>
       <h2>HSL</h2>
       <p>
-        To build a HSL picker we need to depict the hue and saturation as a radial gradient on a
-        circle, with the hues 100% saturated and at 50% luminance around the perimeter and
-        approaching full desaturation towards the center of the circle. This is accomplished with
-        eight partially transparent radial gradients positioned around the circle. The degree of the
-        selection around the circle would give up the Hue and the distance from the center would be
-        the Saturation level. The user then selects the Luminance value from a slider.
+        To build a HSL picker we need to depict the hue and saturation as a radial
+        gradient on a circle, with the hues 100% saturated and at 50% luminance around the
+        perimeter and approaching full desaturation towards the center of the circle. This
+        is accomplished with eight partially transparent radial gradients positioned
+        around the circle. The degree of the selection around the circle would give up the
+        Hue and the distance from the center would be the Saturation level. The user then
+        selects the Luminance value from a slider.
       </p>
       <HSLPicker>
         <HueSatSelect />
