@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import useInterval from 'hooks/useInterval';
+import useInterval from 'shared-hooks/useInterval';
 
-const scrambleChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%&*_+?/1234567890';
+const scrambleChars =
+  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%&*_+?/1234567890';
 const skipChars = ' ,.?!';
 
 const firstScramble = input => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Canvas from './Canvas';
-import useDocumentTitle from 'hooks/useDocumentTitle';
+import useDocumentTitle from 'shared-hooks/useDocumentTitle';
 
 const Styles = styled.div``;
 

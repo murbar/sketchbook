@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import useInterval from 'hooks/useInterval';
+import useInterval from 'shared-hooks/useInterval';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 

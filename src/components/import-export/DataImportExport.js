@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import CodeSnippet from 'components/ui/CodeSnippet';
 import dummyData from './dummyData.json';
-import useDocumentTitle from 'hooks/useDocumentTitle.js';
+import useDocumentTitle from 'shared-hooks/useDocumentTitle';
 
 const Styles = styled.div``;
 

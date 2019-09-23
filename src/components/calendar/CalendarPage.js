@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { getDaysOfWeek, getDaysInMonth, getMonthLabel, getYear } from './dateUtils';
-import useDocumentTitle from 'hooks/useDocumentTitle';
+import useDocumentTitle from 'shared-hooks/useDocumentTitle';
 
 const Styled = styled.div``;
 

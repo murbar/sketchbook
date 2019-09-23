@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import useExpiresArray from 'hooks/useExpiresArray';
+import useExpiresArray from 'shared-hooks/useExpiresArray';
 import { useTransition, animated } from 'react-spring';
-import useDocumentTitle from 'hooks/useDocumentTitle';
+import useDocumentTitle from 'shared-hooks/useDocumentTitle';
 
 const Styles = styled.div`
 li`;

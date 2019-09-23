@@ -1,8 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 // import useMousePosition from 'hooks/useMousePosition';
-import useWindowResize from 'hooks/useWindowResize';
-import useRequestAnimationFrame from 'hooks/useRequestAnimationFrame';
+import useWindowResize from 'shared-hooks/useWindowResize';
+import useRequestAnimationFrame from 'shared-hooks/useRequestAnimationFrame';
 
 class Circle {
   constructor(x = 0, y = 0, dx = 0, dy = 0, radius = 10) {

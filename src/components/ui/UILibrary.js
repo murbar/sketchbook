@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CodeSnippet from './CodeSnippet';
-import useDocumentTitle from 'hooks/useDocumentTitle';
+import useDocumentTitle from 'shared-hooks/useDocumentTitle';
 
 const Styles = styled.div``;
 

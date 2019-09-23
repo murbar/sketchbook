@@ -1,5 +1,5 @@
 import React from 'react';
-import useDocumentTitle from 'hooks/useDocumentTitle';
+import useDocumentTitle from 'shared-hooks/useDocumentTitle';
 
 export default function Games() {
   useDocumentTitle('Games');

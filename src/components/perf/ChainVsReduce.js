@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import useDocumentTitle from 'hooks/useDocumentTitle';
+import useDocumentTitle from 'shared-hooks/useDocumentTitle';
 
 const sumArray = arr => arr.reduce((a, b) => a + b, 0);
 const avgArray = arr => sumArray(arr) / arr.length;

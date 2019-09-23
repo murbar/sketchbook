@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import useDocumentTitle from 'hooks/useDocumentTitle';
+import useDocumentTitle from 'shared-hooks/useDocumentTitle';
 import config from 'config';
 import ReactGA from 'react-ga';
 
