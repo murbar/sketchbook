@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { getDaysOfWeek, getDaysInMonth, getMonthLabel, getYear } from './dateUtils';
+import useDocumentTitle from 'hooks/useDocumentTitle';
 
 const Styled = styled.div``;
 
@@ -124,6 +125,8 @@ export default function Page() {
   const focusCurrentMonth = () => {
     setFocus(prev => ({ ...prev, year: now.getFullYear(), month: now.getMonth() }));
   };
+
+  useDocumentTitle('Calendar Widget');
 
   return (
     <Styled>
