@@ -2,20 +2,26 @@ import React from 'react';
 import styled from 'styled-components';
 import useDocumentTitle from 'hooks/useDocumentTitle';
 
-const Styles = styled.div``;
+const Styles = styled.div`
+  --board-size: 54rem;
+  --border-width: 0.3rem;
+  --border-color: #444;
+`;
 
 const Board = styled.div`
   display: grid;
-  grid-template-columns: [start] repeat(9, 1fr) [end];
-  grid-template-rows: [top] repeat(9, 6rem) [bottom];
-  width: 54rem;
-  border: 2px solid #444;
-  grid-gap: 1px;
+  grid-template-columns: [start] repeat(9, calc(var(--board-size) / 9)) [end];
+  grid-template-rows: [top] repeat(9, calc(var(--board-size) / 9)) [bottom];
+  width: var(--board-size);
+  border: var(--border-width) solid var(--border-color);
   border-radius: 1rem;
   overflow: hidden;
-  background: #444;
+  background: var(--border-color);
+  position: relative;
+  box-sizing: content-box;
 `;
 
+// :nth-child(n + 3):not(:nth-child(n + 8))
 const Cell = styled.input`
   display: flex;
   width: 100%;
@@ -25,8 +31,23 @@ const Cell = styled.input`
   background: white;
   text-align: center;
   align-items: center;
-  font-size: 2.75rem;
+  font-size: 3.5rem;
   font-weight: 500;
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  &:nth-child(3n) {
+    border-right: 3px solid var(--border-color);
+  }
+  &:nth-child(9n) {
+    border-right: none;
+  }
+  &:nth-child(n + 19):nth-child(-n + 27),
+  &:nth-child(n + 46):nth-child(-n + 54) {
+    border-bottom: 3px solid var(--border-color);
+  }
+  &:nth-child(n + 73):nth-child(-n + 81) {
+    border-bottom: none;
+  }
 `;
 
 const boardState = Array.from({ length: 81 }, () => Math.floor(Math.random() * 10));
