@@ -16,7 +16,7 @@ const parseCoordinates = coords => {
   return coords
     .slice(1, coords.length - 1)
     .split(',')
-    .map(n => parseInt(n));
+    .map(n => parseInt(n, 10));
 };
 
 const normalizeNum = (n, nMax, nMin) => {
@@ -57,7 +57,7 @@ function sketch(p5) {
 
     // get coords & build connections
     for (let roomId in mapData) {
-      roomId = parseInt(roomId);
+      roomId = parseInt(roomId, 10);
       const room = mapData[roomId];
 
       // coords
@@ -76,7 +76,8 @@ function sketch(p5) {
         const neighborId = room.exits[neighbor];
         // store connections under room with smaller id to avoid dupes
         if (neighborId < roomId) {
-          const existing = neighborId in roomConnections ? roomConnections[neighborId] : [];
+          const existing =
+            neighborId in roomConnections ? roomConnections[neighborId] : [];
           if (!existing.includes(roomId)) existing.push(roomId);
           roomConnections[neighborId] = existing;
         } else {
@@ -95,7 +96,12 @@ function sketch(p5) {
         const connectedRoomCoords = roomCoords[c];
         p5.stroke('coral');
         p5.strokeWeight(3);
-        p5.line(thisRoomCoords.x, thisRoomCoords.y, connectedRoomCoords.x, connectedRoomCoords.y);
+        p5.line(
+          thisRoomCoords.x,
+          thisRoomCoords.y,
+          connectedRoomCoords.x,
+          connectedRoomCoords.y
+        );
       }
     }
 

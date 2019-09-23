@@ -13,7 +13,7 @@ const parseCoordinates = coords => {
   return coords
     .slice(1, coords.length - 1)
     .split(',')
-    .map(n => parseInt(n));
+    .map(n => parseInt(n, 10));
 };
 
 const getCoordsMaxMinXY = map => {
@@ -120,7 +120,9 @@ function Map({ mapData, currentRoomId = 0, focusRoomId = null, theme }) {
       ctx.font = `bold ${mapFeatureSizePx / 3}px ${theme.fontFamily}`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillStyle = isCurrentRoom ? theme.map.currentRoomLabelColor : theme.map.labelColor;
+      ctx.fillStyle = isCurrentRoom
+        ? theme.map.currentRoomLabelColor
+        : theme.map.labelColor;
       ctx.shadowBlur = 3;
       ctx.shadowColor = isCurrentRoom ? 'black' : 'white';
       ctx.fillText(roomId, x, y);
@@ -181,7 +183,7 @@ function Map({ mapData, currentRoomId = 0, focusRoomId = null, theme }) {
 
     for (let roomId in mapData) {
       if (roomId || roomId === 0) {
-        roomId = parseInt(roomId);
+        roomId = parseInt(roomId, 10);
         const room = mapData[roomId];
 
         // coords
@@ -191,14 +193,15 @@ function Map({ mapData, currentRoomId = 0, focusRoomId = null, theme }) {
           (rawX - constCoordAdjustment) * mapFeatureSizePx + 0.75 * mapFeatureSizePx;
         // y coord is inverted
         const adjustedY =
-          mapSizePx - ((rawY - constCoordAdjustment) * mapFeatureSizePx + 0.75 * mapFeatureSizePx);
+          mapSizePx -
+          ((rawY - constCoordAdjustment) * mapFeatureSizePx + 0.75 * mapFeatureSizePx);
         const [x, y] = [adjustedX, adjustedY]
           .map(c => Math.ceil(c))
           .map(c => c + Math.round(wiggle(4)));
         const coords = { x, y };
 
         roomCoords.current[roomId] = coords;
-        const isCurrentRoom = parseInt(roomId) === currentRoomId;
+        const isCurrentRoom = parseInt(roomId, 10) === currentRoomId;
         if (isCurrentRoom) {
           setFocus(coords);
           currentRoomCoords.current = coords;
@@ -235,12 +238,20 @@ function Map({ mapData, currentRoomId = 0, focusRoomId = null, theme }) {
     // draw rooms
     for (const roomId in mapData) {
       const { x, y } = coords[roomId];
-      const isCurrentRoom = parseInt(roomId) === currentRoomId;
-      const isFocusRoom = parseInt(roomId) === focusRoomId;
+      const isCurrentRoom = parseInt(roomId, 10) === currentRoomId;
+      const isFocusRoom = parseInt(roomId, 10) === focusRoomId;
       const room = mapData[roomId];
       drawRoom(x, y, roomId, isCurrentRoom, isFocusRoom, room['label']);
     }
-  }, [mapData, currentRoomId, theme, focusRoomId, drawRoom, drawConnection, drawUnknownConnection]);
+  }, [
+    mapData,
+    currentRoomId,
+    theme,
+    focusRoomId,
+    drawRoom,
+    drawConnection,
+    drawUnknownConnection
+  ]);
 
   const resetFocus = () => {
     setFocus(currentRoomCoords.current ? currentRoomCoords.current : initFocus);
