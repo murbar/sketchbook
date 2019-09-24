@@ -15,23 +15,27 @@ const Styles = styled.div`
   border: var(--border-width) solid var(--border-color);
   border-radius: 0.5rem;
   overflow: hidden;
-  /* background: var(--border-color); */
   position: relative;
   box-sizing: content-box;
+  filter: ${p => (p.isPaused ? 'blur(0.75rem)' : 'none')};
 `;
 
-export default function GameGrid({ cells, handleCellChange, initialIndexes }) {
+export default function GameGrid({
+  cells,
+  handleCellChange,
+  startingValueIndexes,
+  isPaused
+}) {
   return (
-    <Styles>
+    <Styles isPaused={isPaused}>
       {cells.map((value, index) => {
-        const initial = initialIndexes.includes(index);
         return (
           <Cell
             key={index}
             handleCellChange={handleCellChange}
             index={index}
             value={value}
-            initial={initial}
+            isStartingValue={startingValueIndexes.includes(index)}
           />
         );
       })}
