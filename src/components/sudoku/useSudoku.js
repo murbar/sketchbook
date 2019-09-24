@@ -49,6 +49,10 @@ export default function useSudoku(options) {
     }
   };
 
+  const addHints = (qty = 3) => {
+    setHintsRemaining(prev => (prev += qty));
+  };
+
   const solveGame = () => {
     // try/catch
     const solved = solvePuzzle(cells);
@@ -96,6 +100,7 @@ export default function useSudoku(options) {
       setCell,
       checkValidCell,
       getHint,
+      addHints,
       clearCells,
       initNewGame,
       resetGame,
