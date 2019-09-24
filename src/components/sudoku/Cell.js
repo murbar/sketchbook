@@ -45,7 +45,7 @@ const Input = styled.input`
   }
 `;
 
-export default function Cell({ value, index, initial, handleCellChange }) {
+export default function Cell({ value, index, isStartingValue, handleCellChange }) {
   const handleChange = e => {
     let { value: newValue } = e.target;
     newValue = newValue === '' ? 0 : parseInt(newValue.toString().slice(0, 1), 10);
@@ -57,7 +57,7 @@ export default function Cell({ value, index, initial, handleCellChange }) {
     <Input
       value={value === 0 ? '' : value}
       onChange={handleChange}
-      disabled={initial}
+      disabled={isStartingValue}
       maxLength="1"
       min="1"
       max="9"
