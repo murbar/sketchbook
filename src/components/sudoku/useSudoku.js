@@ -1,37 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
-import { solve, convertGridValuesToMatrix, generateGameGrid } from './gameLogic';
-
-// class Cell {
-//   constructor(value) {
-//     this.value = value;
-//     this.initial = value !== 0;
-//     this.hint = false;
-//     this.warn = false;
-//   }
-
-//   setValue(value) {
-//     value = value === '' ? 0 : parseInt(value.toString().slice(0, 1), 10);
-//     if (isNaN(value)) {
-//       this.value = 0;
-//     } else {
-//       this.value = value;
-//     }
-//   }
-// }
-
-const buildEmptyArray = length => Array(length).fill(null);
-
-const initEmptyGrid = () => buildEmptyArray(81).map(() => 0);
-
-const convertGridArrayToMatrix = gridArray => {
-  const valuesString = serializeGrid(gridArray);
-  return convertGridValuesToMatrix(valuesString);
-};
-
-const serializeGrid = gridArray =>
-  gridArray.reduce((serialized, cell) => serialized + cell, '');
-
-const deserializeGrid = valuesString => [...valuesString].map(v => parseInt(v, 10));
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { initEmptyGridCells, getIndexes, getRandomElement } from './lib/helpers';
+import { generateGameCells } from './lib/generate';
+import { checkValidInAll, checkIsSolved } from './lib/validate';
+import { solvePuzzle } from './lib/solve';
 
 function useLogging(data) {
   useEffect(() => {
@@ -39,58 +10,90 @@ function useLogging(data) {
   }, [data]);
 }
 
-export default function useSudoku(blank = false) {
-  const [grid, setGrid] = useState(initEmptyGrid());
+export default function useSudoku(options) {
+  options = {
+    blank: false,
+    hints: 3,
+    difficulty: 1,
+    ...options
+  };
+  const initialCells = useRef([]);
+  const solvedCells = useRef([]);
   const [isSolved, setIsSolved] = useState(false);
-  const [difficulty, setDifficulty] = useState(3);
-  const gameInitialGrid = useRef([]);
-  const gameSolvedGrid = useRef([]);
+  const [isPaused, setIsPaused] = useState(false);
+  const [difficulty, setDifficulty] = useState(options.difficulty);
+  const [hintsRemaining, setHintsRemaining] = useState(options.hints);
+  const [cells, setCells] = useState(initEmptyGridCells());
+  const startingValueIndexes = getIndexes(initialCells.current, v => v !== 0);
 
-  // useLogging(grid);
-  useLogging(gameInitialGrid.current);
+  useEffect(() => {
+    setIsSolved(checkIsSolved(cells));
+  }, [cells]);
+
+  // useLogging(cells);
+  useLogging(startingValueIndexes);
 
   const setCell = (index, value) => {
-    setGrid(prev => {
+    setCells(prev => {
       prev[index] = value;
-      return [...prev];
+      return prev;
     });
   };
 
+  const getHint = () => {
+    if (hintsRemaining > 0) {
+      const emptyCells = getIndexes(cells, v => v === 0);
+      const i = getRandomElement(emptyCells);
+      setCell(i, solvedCells.current[i]);
+      setHintsRemaining(prev => (prev -= 1));
+    }
+  };
+
   const solveGame = () => {
-    const gridMatrix = convertGridArrayToMatrix(grid);
-    const solvedGridArray = solve(gridMatrix).flat();
-    setGrid(solvedGridArray);
+    // try/catch
+    const solved = solvePuzzle(cells);
+    setCells(solved);
   };
 
-  const validateGame = () => {};
+  const togglePaused = () => setIsPaused(prev => !prev);
 
-  const clearGrid = () => setGrid(initEmptyGrid());
+  const checkValidCell = (value, index) => checkValidInAll(value, index, cells);
 
-  const startNewGame = () => {
-    const [initialGrid, solvedGrid] = generateGameGrid(difficulty);
-    gameInitialGrid.current = [...initialGrid.flat()];
-    gameSolvedGrid.current = [...solvedGrid.flat()];
-    setGrid([...initialGrid.flat()]);
+  const clearCells = () => setCells(initEmptyGridCells());
+
+  const initNewGame = useCallback(() => {
+    const [initial, solved] = generateGameCells(difficulty);
+    initialCells.current = [...initial];
+    solvedCells.current = [...solved];
+    setCells([...initial]);
+  }, [difficulty]);
+
+  const resetGame = () => {
+    setCells(initialCells.current);
+    setHintsRemaining(options.hints);
   };
-
-  const resetGame = () => setGrid(deserializeGrid(gameInitialGrid.current));
 
   useEffect(() => {
-    if (!blank) startNewGame();
-  }, [blank]);
-
-  const initialIndexes = gameInitialGrid.current
-    .map((_, i) => i)
-    .filter(i => grid[i] !== 0);
+    if (!options.blank) initNewGame();
+  }, [initNewGame, options.blank]);
 
   return {
-    grid,
-    setCell,
-    clearGrid,
-    startNewGame,
-    resetGame,
-    solveGame,
-    serialized: gameInitialGrid.current,
-    initialIndexes
+    cells,
+    startingValueIndexes,
+    isSolved,
+    isPaused,
+    hintsRemaining,
+    difficulty,
+    actions: {
+      setDifficulty,
+      setCell,
+      checkValidCell,
+      getHint,
+      clearCells,
+      initNewGame,
+      resetGame,
+      solveGame,
+      togglePaused
+    }
   };
 }
