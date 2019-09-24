@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Cell from './Cell';
-import { calcDestinationIndex } from './lib/helpers';
+import { calcDestinationIndex, calcRowAndCol, calcSubGrid } from './lib/helpers';
 
 const Styles = styled.div`
   --board-size: 54rem;
@@ -21,13 +21,42 @@ const Styles = styled.div`
   filter: ${p => (p.isPaused ? 'blur(0.75rem)' : 'none')};
 `;
 
+const calcIsHighlighted = (index, focusObj) => {
+  const { row, col } = calcRowAndCol(index);
+  const subGrid = calcSubGrid(index);
+  return row === focusObj.row || col === focusObj.col || subGrid === focusObj.subGrid;
+};
+
+const initFocus = {
+  index: null,
+  row: null,
+  col: null,
+  subGrid: null
+};
+
 export default function GameGrid({
   cells,
   handleCellChange,
   startingValueIndexes,
-  isPaused
+  isPaused,
+  highlightFocus = false
 }) {
   const gridRef = useRef();
+  const [focus, setFocus] = useState(initFocus);
+
+  const handleFocusCell = index => {
+    if (index === null) {
+      setFocus(initFocus);
+    } else {
+      const { row, col } = calcRowAndCol(index);
+      setFocus({
+        index,
+        row,
+        col,
+        subGrid: calcSubGrid(index)
+      });
+    }
+  };
 
   const handleGridNavigate = (currentIndex, key) => {
     let invalidDest = true;
@@ -43,24 +72,29 @@ export default function GameGrid({
     }
   };
 
+  // const isWarn = index === 15;
   return (
     <Styles isPaused={isPaused} ref={gridRef}>
       {cells.map((value, index) => {
+        const isHighlight = highlightFocus && calcIsHighlighted(index, focus);
         return (
           <Cell
             key={index}
             handleCellChange={handleCellChange}
             handleGridNavigate={handleGridNavigate}
+            handleFocusCell={handleFocusCell}
             index={index}
             value={value}
             isStartingValue={startingValueIndexes.includes(index)}
+            isHighlight={isHighlight}
+            // isWarn={isWarn}
           />
         );
       })}
     </Styles>
   );
 }
-
+// TODO
 GameGrid.propTypes = {
   cells: PropTypes.array.isRequired
 };

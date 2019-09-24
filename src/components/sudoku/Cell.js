@@ -7,7 +7,8 @@ const Input = styled.input`
   width: 100%;
   height: 100%;
   margin: 0;
-  background: white;
+  background: ${p => (p.isHighlight ? 'lightyellow' : 'white')};
+  color: ${p => (p.isWarn ? 'crimson' : 'inherit')};
   text-align: center;
   align-items: center;
   font-size: 3.5rem;
@@ -50,8 +51,11 @@ export default function Cell({
   value,
   index,
   isStartingValue,
+  isHighlight,
+  isWarn,
   handleCellChange,
-  handleGridNavigate
+  handleGridNavigate,
+  handleFocusCell
 }) {
   const handleChange = e => {
     let { value: newValue } = e.target;
@@ -73,7 +77,10 @@ export default function Cell({
       value={value === 0 ? '' : value}
       onChange={handleChange}
       onKeyDown={handleKeyDown}
+      onFocus={() => handleFocusCell(index)}
       disabled={isStartingValue}
+      isHighlight={isHighlight}
+      isWarn={isWarn}
       maxLength="1"
       min="1"
       max="9"
