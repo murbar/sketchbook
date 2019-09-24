@@ -5,33 +5,44 @@ import GameGrid from './GameGrid';
 import useSudoku from './useSudoku';
 
 // highlight similar values on hover
+// highlight when all of one value is filled and valid
+// persist game to LS
+// set difficulty
 
 const Styles = styled.div``;
 
 export default function SudokuPage() {
   useDocumentTitle('Sudoku');
   const {
-    grid,
-    startNewGame,
-    resetGame,
-    clearGrid,
-    setCell,
-    solveGame,
-    initialIndexes
+    cells,
+    startingValueIndexes,
+    hintsRemaining,
+    isSolved,
+    isPaused,
+    actions
   } = useSudoku();
   // console.log(grid);
   return (
     <Styles>
       <h1>Sudoku</h1>
-      <GameGrid cells={grid} handleCellChange={setCell} initialIndexes={initialIndexes} />
-      <button>Hint</button>
-      <button onClick={solveGame}>Solve</button>
-      <button onClick={startNewGame}>New</button>
-      <button onClick={resetGame}>Reset</button>
-      <button>Pause/Resume</button>
-      <button onClick={clearGrid}>Clear</button>
-      <h2>Time: 00:00</h2>
-      <h2>Mode: play/solve</h2>
+      {isSolved && <h2>Solved! Good work.</h2>}
+      <p>Hints remaining: {hintsRemaining}</p>
+      <GameGrid
+        cells={cells}
+        isPaused={isPaused}
+        handleCellChange={actions.setCell}
+        startingValueIndexes={startingValueIndexes}
+      />
+      <button onClick={actions.getHint} disabled={hintsRemaining < 1}>
+        Get Hint
+      </button>
+      <button onClick={actions.solveGame}>Solve</button>
+      <button onClick={actions.initNewGame}>New</button>
+      <button onClick={actions.resetGame}>Reset</button>
+      <button onClick={actions.togglePaused}>{isPaused ? 'Resume' : 'Pause'}</button>
+      <button onClick={actions.clearCells}>Clear</button>
+      {/* <h2>Time: 00:00</h2> */}
+      {/* <h2>Mode: play/solve</h2> */}
     </Styles>
   );
 }
