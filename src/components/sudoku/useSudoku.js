@@ -36,7 +36,7 @@ export default function useSudoku(options) {
   const setCell = (index, value) => {
     setCells(prev => {
       prev[index] = value;
-      return prev;
+      return [...prev];
     });
   };
 
