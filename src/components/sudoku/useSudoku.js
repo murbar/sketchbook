@@ -1,5 +1,10 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { initEmptyGridCells, getIndexes, getRandomElement } from './lib/helpers';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import {
+  initEmptyGridCells,
+  getIndexes,
+  getRandomElement,
+  countCellsFilled
+} from './lib/helpers';
 import { generateGameCells } from './lib/generate';
 import { checkValidInAll, checkIsSolved } from './lib/validate';
 import { solvePuzzle } from './lib/solve';
@@ -25,6 +30,10 @@ export default function useSudoku(options) {
   const [hintsRemaining, setHintsRemaining] = useState(options.hints);
   const [cells, setCells] = useState(initEmptyGridCells());
   const startingValueIndexes = getIndexes(initialCells.current, v => v !== 0);
+  const isFilledButUnsolved = useMemo(
+    () => !isSolved && countCellsFilled(cells) === cells.length,
+    [cells, isSolved]
+  );
 
   useEffect(() => {
     setIsSolved(checkIsSolved(cells));
@@ -93,6 +102,7 @@ export default function useSudoku(options) {
     startingValueIndexes,
     isSolved,
     isPaused,
+    isFilledButUnsolved,
     hintsRemaining,
     difficulty,
     actions: {

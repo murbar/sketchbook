@@ -19,13 +19,15 @@ export default function SudokuPage() {
     hintsRemaining,
     isSolved,
     isPaused,
+    isFilledButUnsolved,
     actions
   } = useSudoku();
-  // console.log(grid);
+
   return (
     <Styles>
       <h1>Sudoku</h1>
       {isSolved && <h2>Solved! Good work.</h2>}
+      {isFilledButUnsolved && <h2>Hmm. That's not quite right, check your work.</h2>}
       <p>Hints remaining: {hintsRemaining}</p>
       <GameGrid
         cells={cells}
