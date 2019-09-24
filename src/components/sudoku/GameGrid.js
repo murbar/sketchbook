@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Cell from './Cell';
+import { calcDestinationIndex } from './lib/helpers';
 
 const Styles = styled.div`
   --board-size: 54rem;
@@ -27,9 +28,19 @@ export default function GameGrid({
   isPaused
 }) {
   const gridRef = useRef();
-  const handleGridNavigate = destinationIndex => {
-    const destCell = gridRef.current.querySelector(`[data-index='${destinationIndex}']`);
-    destCell.focus();
+
+  const handleGridNavigate = (currentIndex, key) => {
+    let invalidDest = true;
+    let destIndex = calcDestinationIndex(currentIndex, key);
+    while (invalidDest) {
+      const destCell = gridRef.current.querySelector(`[data-index='${destIndex}']`);
+      if (!destCell.disabled) {
+        invalidDest = false;
+        destCell.focus();
+      } else {
+        destIndex = calcDestinationIndex(destIndex, key);
+      }
+    }
   };
 
   return (

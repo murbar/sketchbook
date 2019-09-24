@@ -50,3 +50,28 @@ export const checkIsEmpty = gridArray => {
 
 export const countCellsFilled = gridArray =>
   gridArray.reduce((count, cell) => (cell !== 0 ? count + 1 : count), 0);
+
+export const isArrowKey = key =>
+  key === 'ArrowUp' || key === 'ArrowDown' || key === 'ArrowRight' || key === 'ArrowLeft';
+
+export const calcDestinationIndex = (index, key) => {
+  let destIndex = index;
+  const maxIndex = GRID_SIZE ** 2 - 1;
+  if (key === 'ArrowRight') {
+    const i = destIndex + 1;
+    destIndex = i <= maxIndex ? i : 0;
+  }
+  if (key === 'ArrowLeft') {
+    const i = destIndex + -1;
+    destIndex = i >= 0 ? i : maxIndex;
+  }
+  if (key === 'ArrowDown') {
+    const i = destIndex + GRID_SIZE;
+    destIndex = i < maxIndex ? i : i - maxIndex;
+  }
+  if (key === 'ArrowUp') {
+    const i = destIndex - GRID_SIZE;
+    destIndex = i > 0 ? i : maxIndex + i; // i is negative in else clause
+  }
+  return destIndex;
+};

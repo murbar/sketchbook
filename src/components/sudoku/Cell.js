@@ -1,31 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { GRID_SIZE, calcRowAndCol } from './lib/helpers';
-
-const isArrowKey = key =>
-  key === 'ArrowUp' || key === 'ArrowDown' || key === 'ArrowRight' || key === 'ArrowLeft';
-
-const calcDestinationIndex = (index, key) => {
-  let destIndex = index;
-  const maxIndex = GRID_SIZE ** 2 - 1;
-  if (key === 'ArrowRight') {
-    const i = destIndex + 1;
-    destIndex = i <= maxIndex ? i : 0;
-  }
-  if (key === 'ArrowLeft') {
-    const i = destIndex + -1;
-    destIndex = i >= 0 ? i : maxIndex;
-  }
-  if (key === 'ArrowDown') {
-    const i = destIndex + GRID_SIZE;
-    destIndex = i < maxIndex ? i : maxIndex;
-  }
-  if (key === 'ArrowUp') {
-    const i = destIndex - GRID_SIZE;
-    destIndex = i > 0 ? i : 0;
-  }
-  return destIndex;
-};
+import { isArrowKey } from './lib/helpers';
 
 const Input = styled.input`
   display: flex;
@@ -87,11 +62,9 @@ export default function Cell({
 
   const handleKeyDown = e => {
     const { key } = e;
-    if (isArrowKey(key) || key === 'Enter') e.preventDefault();
-    if (key === 'Enter') {
-      handleGridNavigate(calcDestinationIndex(index, 'ArrowRight'));
-    } else {
-      handleGridNavigate(calcDestinationIndex(index, key));
+    if (isArrowKey(key) || key === 'Enter') {
+      e.preventDefault();
+      handleGridNavigate(index, key === 'Enter' ? 'ArrowRight' : key);
     }
   };
 
