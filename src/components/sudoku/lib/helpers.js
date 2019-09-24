@@ -30,6 +30,11 @@ export const calcRowAndCol = (index, gridWidth = GRID_SIZE) => {
   return { row: Math.floor(index / gridWidth), col: index % gridWidth };
 };
 
+export const calcSubGrid = (index, gridWidth = GRID_SIZE / 3) => {
+  const { row, col } = calcRowAndCol(index);
+  return Math.floor(row / gridWidth) * gridWidth + Math.floor(col / gridWidth);
+};
+
 export const serializeValuesArray = array => array.reduce((str, v) => str + v, '');
 
 export const deserializeValuesString = string => [...string].map(v => parseInt(v, 10));
