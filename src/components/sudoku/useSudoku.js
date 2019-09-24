@@ -59,17 +59,24 @@ export default function useSudoku(options) {
 
   const checkValidCell = (value, index) => checkValidInAll(value, index, cells);
 
-  const clearCells = () => setCells(initEmptyGridCells());
+  const clearCells = () => {
+    setCells(initEmptyGridCells());
+    initialCells.current = [];
+    solvedCells.current = [];
+  };
 
   const initNewGame = useCallback(() => {
     const [initial, solved] = generateGameCells(difficulty);
     initialCells.current = [...initial];
     solvedCells.current = [...solved];
     setCells([...initial]);
-  }, [difficulty]);
+    setHintsRemaining(options.hints);
+  }, [difficulty, options.hints]);
 
   const resetGame = () => {
-    setCells(initialCells.current);
+    if (initialCells.current.length > 0) {
+      setCells([...initialCells.current]);
+    }
     setHintsRemaining(options.hints);
   };
 
