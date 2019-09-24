@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Cell from './Cell';
@@ -26,13 +26,20 @@ export default function GameGrid({
   startingValueIndexes,
   isPaused
 }) {
+  const gridRef = useRef();
+  const handleGridNavigate = destinationIndex => {
+    const destCell = gridRef.current.querySelector(`[data-index='${destinationIndex}']`);
+    destCell.focus();
+  };
+
   return (
-    <Styles isPaused={isPaused}>
+    <Styles isPaused={isPaused} ref={gridRef}>
       {cells.map((value, index) => {
         return (
           <Cell
             key={index}
             handleCellChange={handleCellChange}
+            handleGridNavigate={handleGridNavigate}
             index={index}
             value={value}
             isStartingValue={startingValueIndexes.includes(index)}
