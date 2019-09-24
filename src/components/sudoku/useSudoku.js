@@ -24,20 +24,16 @@ export default function useSudoku(options) {
   };
   const initialCells = useRef([]);
   const solvedCells = useRef([]);
-  const [isSolved, setIsSolved] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [difficulty, setDifficulty] = useState(options.difficulty);
   const [hintsRemaining, setHintsRemaining] = useState(options.hints);
   const [cells, setCells] = useState(initEmptyGridCells());
   const startingValueIndexes = getIndexes(initialCells.current, v => v !== 0);
+  const isSolved = useMemo(() => checkIsSolved(cells), [cells]);
   const isFilledButUnsolved = useMemo(
     () => !isSolved && countCellsFilled(cells) === cells.length,
     [cells, isSolved]
   );
-
-  useEffect(() => {
-    setIsSolved(checkIsSolved(cells));
-  }, [cells]);
 
   // useLogging(cells);
   useLogging(startingValueIndexes);
