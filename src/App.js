@@ -14,6 +14,7 @@ const MessageQueue = lazy(() => import('components/message-queue/MessageQueue'))
 const ChainVsReduce = lazy(() => import('components/perf/ChainVsReduce'));
 const Tweening = lazy(() => import('components/string-tweening/Demo'));
 const Calendar = lazy(() => import('components/calendar/CalendarPage'));
+const Timers = lazy(() => import('components/timers/TimersPage'));
 const CanvasCircles = lazy(() => import('components/canvas-circles/CanvasCirclesPage'));
 
 const Layout = styled.div`
@@ -44,6 +45,7 @@ function App() {
               <Route path="/string-tweening" component={Tweening} />
               <Route path="/chaining-perf" component={ChainVsReduce} />
               <Route path="/calendar" component={Calendar} />
+              <Route path="/timers" component={Timers} />
               <Route path="/canvas-circles" component={CanvasCircles} />
               <Route component={NotFound} />
             </Switch>

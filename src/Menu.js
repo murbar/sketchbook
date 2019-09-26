@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 const pages = [
   { path: '/maze', title: 'Maze' },
+  { path: '/timers', title: 'Timers' },
   { path: '/games', title: 'Games' },
   { path: '/color-picker', title: 'Color picker' },
   { path: '/import-export', title: 'Data import/export' },
