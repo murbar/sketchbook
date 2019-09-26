@@ -12,7 +12,6 @@ const pages = [
   { path: '/string-tweening', title: 'String tweening' },
   { path: '/chaining-perf', title: 'Chaining Vs reduce' },
   { path: '/canvas-circles', title: 'Canvas Circles' },
-  { path: '/sudoku', title: 'Sudoku' },
   { path: '/calendar', title: 'Calendar' }
 ];
 
