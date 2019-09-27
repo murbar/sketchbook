@@ -31,7 +31,7 @@ export const completeTimer = timer => {
 export const advanceTimer = timer => {
   if (timer.isRunning) {
     timer.currentElapsed = Date.now() - timer.startedAt;
-    if (getTotalElapsed(timer) >= timer.duration) {
+    if (timer.duration && getTotalElapsed(timer) >= timer.duration) {
       completeTimer(timer);
     }
     return true; // notify caller the state of this instance has changed
