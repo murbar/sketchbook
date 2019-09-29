@@ -60,7 +60,6 @@ export default function Timers() {
             }}
           />
         ))}
-        <h2>Countdowns</h2>
       </div>
     </Styles>
   );
