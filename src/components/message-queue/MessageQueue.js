@@ -9,7 +9,8 @@ li`;
 
 export default function MessageQueue() {
   const { items, add, remove, count } = useExpiresArray();
-  const [inputs, setInputs] = useState({ delay: 3000 });
+  const defaultMessage = 'Message text';
+  const [inputs, setInputs] = useState({ message: defaultMessage, delay: 3000 });
   const itemsTransition = useTransition(items, m => m.id, {
     from: {
       opacity: 0,
@@ -28,7 +29,7 @@ export default function MessageQueue() {
   const addMessage = e => {
     e.preventDefault();
     add(inputs.message, inputs.delay);
-    setInputs(prev => ({ ...prev, message: '' }));
+    setInputs(prev => ({ ...prev, message: defaultMessage }));
   };
 
   const handleOnChange = e => {
@@ -53,6 +54,7 @@ export default function MessageQueue() {
           value={inputs.message || ''}
           onChange={handleOnChange}
           placeholder="Message text"
+          onFocus={e => e.target.select()}
         />
         <input
           type="number"
